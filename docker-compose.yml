@@ -36,8 +36,6 @@ services:
       OPENSEARCH_HOSTS: '["https://opensearch-node1:9200"]'
       OPENSEARCH_USERNAME: admin
       OPENSEARCH_PASSWORD: vLPeJYa8.3RqtZCcAK6jNz
-    #volumes:
-    #  - ./config/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
     networks:
       - opensearch-net
 

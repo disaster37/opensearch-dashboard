@@ -1,0 +1,43 @@
+name: "build"
+
+on:
+  push:
+    branches:
+      - main
+      - 2.x
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - main
+      - 2.x
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.20"
+      - name: Setup Opensearch
+        run: |
+          set -e
+          docker-compose up -d
+          echo "Waiting for Elasticsearch availability"
+          until $(curl --output /dev/null --silent --head --fail -u admin:vLPeJYa8.3RqtZCcAK6jNz http://localhost:5601); do sleep 5; done
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: latest
+          args: --timeout 600s
+      - name: Run build
+        run: go build
+      - name: Run test
+        run: make test
+      - uses: codecov/codecov-action@v2
+        with:
+          files: coverage.out
+          flags: unittests
+          fail_ci_if_error: true

@@ -396,7 +396,7 @@ func (h DefaultSavedObjectApi) Delete(tenantId string, objectType string, object
 	}
 
 	if objectType == "" {
-		NewAPIError(600, "You must provide the object Type to update")
+		return NewAPIError(600, "You must provide the object Type to update")
 	}
 
 	// forge URL
