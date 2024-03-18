@@ -1,4 +1,4 @@
-
+[![build](https://github.com/disaster37/opensearch-dashboard/actions/workflows/workflow.yml/badge.svg)](https://github.com/disaster37/opensearch-dashboard/actions/workflows/workflow.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/disaster37/opensearch-dashboard)](https://goreportcard.com/report/github.com/disaster37/opensearch-dashboard)
 [![GoDoc](https://godoc.org/github.com/disaster37/opensearch-dashboard?status.svg)](http://godoc.org/github.com/disaster37/opensearch-dashboard)
 [![codecov](https://codecov.io/gh/disaster37/opensearch-dashboard/branch/2.x/graph/badge.svg)](https://codecov.io/gh/disaster37/opensearch-dashboard)
