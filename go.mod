@@ -3,12 +3,13 @@ module github.com/disaster37/opensearch-dashboard/v2
 go 1.22
 
 require (
-	github.com/disaster37/opensearch/v2 v2.0.8
-	github.com/go-resty/resty/v2 v2.13.1
+	github.com/disaster37/opensearch/v2 v2.0.10
+	github.com/go-resty/resty/v2 v2.14.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
-	k8s.io/utils v0.0.0-20240502163921-fe8a2dddb1d0
+	go.uber.org/mock v0.4.0
+	k8s.io/utils v0.0.0-20240821151609-f90d01438635
 )
 
 require (
@@ -24,11 +25,10 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
-	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
-	golang.org/x/crypto v0.23.0 // indirect
-	golang.org/x/net v0.25.0 // indirect
-	golang.org/x/sys v0.20.0 // indirect
-	golang.org/x/term v0.20.0 // indirect
+	golang.org/x/crypto v0.25.0 // indirect
+	golang.org/x/net v0.27.0 // indirect
+	golang.org/x/sys v0.22.0 // indirect
+	golang.org/x/term v0.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
