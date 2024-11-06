@@ -3,13 +3,13 @@ module github.com/disaster37/opensearch-dashboard/v2
 go 1.22
 
 require (
-	github.com/disaster37/opensearch/v2 v2.0.10
-	github.com/go-resty/resty/v2 v2.14.0
+	github.com/disaster37/opensearch/v2 v2.0.11
+	github.com/go-resty/resty/v2 v2.15.3
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
-	go.uber.org/mock v0.4.0
-	k8s.io/utils v0.0.0-20240821151609-f90d01438635
+	go.uber.org/mock v0.5.0
+	k8s.io/utils v0.0.0-20241104163129-6fe5fd82f078
 )
 
 require (
