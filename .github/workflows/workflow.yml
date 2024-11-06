@@ -23,7 +23,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: "1.22"
+          go-version: "1.23"
       - name: Setup Opensearch
         run: |
           set -e
@@ -31,7 +31,7 @@ jobs:
           echo "Waiting for Elasticsearch availability"
           until $(curl --output /dev/null --silent --head --fail -u admin:vLPeJYa8.3RqtZCcAK6jNz http://localhost:5601); do sleep 5; done
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
+        uses: golangci/golangci-lint-action@v6
         with:
           version: latest
           args: --timeout 600s
