@@ -118,7 +118,7 @@ func (h DefaultSavedObjectApi) Get(tenantId string, objectType string, objectId 
 		if resp.StatusCode() == 404 {
 			return nil, nil
 		}
-		return nil, NewAPIError(resp.StatusCode(), "%s", resp.Status())
+		return nil, NewAPIError(resp.StatusCode(), resp.Status())
 
 	}
 	object = &Object{}
@@ -155,7 +155,7 @@ func (h DefaultSavedObjectApi) BulkGet(tenantId string, bulks []SavedObjectBulkG
 		if resp.StatusCode() == 404 {
 			return nil, nil
 		}
-		return nil, NewAPIError(resp.StatusCode(), "%s", resp.Status())
+		return nil, NewAPIError(resp.StatusCode(), resp.Status())
 
 	}
 	res := new(SavedObjectBulkResponse)
@@ -223,7 +223,7 @@ func (h DefaultSavedObjectApi) Find(tenantId string, option SavedObjectFindOptio
 		if resp.StatusCode() == 404 {
 			return nil, nil
 		}
-		return nil, NewAPIError(resp.StatusCode(), "%s", resp.Status())
+		return nil, NewAPIError(resp.StatusCode(), resp.Status())
 
 	}
 	findResponse := new(SavedObjectFindResponse)

@@ -4,7 +4,11 @@ import "github.com/stretchr/testify/assert"
 
 func (s *ApiTestSuite) TestError() {
 
-	err := NewAPIError(404, "test %s error", "plop")
+	err := NewAPIErrorf(404, "test %s error", "plop")
 	assert.Equal(s.T(), 404, err.Code)
 	assert.Equal(s.T(), "test plop error", err.Error())
+
+	err = NewAPIError(404, "test error")
+	assert.Equal(s.T(), 404, err.Code)
+	assert.Equal(s.T(), "test error", err.Error())
 }
