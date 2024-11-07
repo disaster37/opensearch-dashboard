@@ -30,16 +30,11 @@ func (s *ApiTestSuite) SetupSuite() {
 	logrus.SetFormatter(new(prefixed.TextFormatter))
 	logrus.SetLevel(logrus.DebugLevel)
 
-	address := os.Getenv("DASHBOARD_URL")
 	username := os.Getenv("DASHBOARD_USERNAME")
 	password := os.Getenv("DASHBOARD_PASSWORD")
 
-	if address == "" {
-		panic("You need to put opensearch dashboard url on environment variable DASHBOARD_URL. If you need auth, you can use DASHBOARD_USERNAME and DASHBOARD_PASSWORD")
-	}
-
 	restyClient := resty.New().
-		SetBaseURL(address).
+		SetBaseURL("http://dashboard.svc:5601").
 		SetBasicAuth(username, password).
 		SetHeader("osd-xsrf", "true").
 		SetHeader("Content-Type", "application/json").
@@ -68,7 +63,7 @@ func (s *ApiTestSuite) SetupSuite() {
 
 	// Create a tenant for test purpose
 	cfg := &config.Config{
-		URLs:        []string{"https://127.0.0.1:9200"},
+		URLs:        []string{"https://opensearch.svc:9200"},
 		Username:    username,
 		Password:    password,
 		Sniff:       ptr.To[bool](false),

@@ -17,32 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: KengoTODA/actions-setup-docker-compose@main
+      - name: Call Dagger Function
+        uses: dagger/dagger-for-github@v6
+        with:
+          version: "latest"
+          verb: call
+          args: --src . ci --ci --code-cove-token env:CODECOV_TOKEN
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Setup Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: "1.23"
-      - name: Setup Opensearch
-        run: |
-          set -e
-          docker-compose up -d
-          echo "Waiting for Elasticsearch availability"
-          until $(curl --output /dev/null --silent --head --fail -u admin:vLPeJYa8.3RqtZCcAK6jNz http://localhost:5601); do sleep 5; done
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: latest
-          args: --timeout 600s
-      - name: Run build
-        run: go build
-      - name: Run test
-        run: make test
-      - uses: codecov/codecov-action@v4.0.1
-        with:
-          files: coverage.out
-          flags: unittests
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: disaster37/opensearch-dashboard
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
