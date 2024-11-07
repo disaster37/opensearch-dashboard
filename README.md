@@ -172,15 +172,3 @@ if err != nil {
 }
 log.Println(resp)
 ```
-
-## Contribute
-
-PR are always welcome here !
-
-Please start from the branch `2.x`, implement code and don't forget to implement test to prove it's work as expected.
-
-To test:
-```bash
-docker-compose up -d
-make test
-```
