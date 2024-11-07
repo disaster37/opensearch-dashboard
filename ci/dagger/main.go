@@ -97,6 +97,9 @@ func (h *OpensearchDashboard) Ci(
 	dir = dir.WithFile("coverage.out", reportFile)
 
 	if ci {
+		if codeCoveToken == nil {
+			return nil, errors.New("You need to provide CodeCov token")
+		}
 		stdout, err = h.CodeCov(ctx, dir, codeCoveToken)
 		if err != nil {
 			return nil, errors.Wrapf(err, "Error when upload report on CodeCov: %s", stdout)
