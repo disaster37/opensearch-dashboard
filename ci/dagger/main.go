@@ -27,6 +27,10 @@ const (
 	OpensearchVersion string = "2.18.0"
 	username          string = "admin"
 	password          string = "vLPeJYa8.3RqtZCcAK6jNz"
+	mockgenVersion           = "v0.3.0"
+	gitUsername       string = "ci"
+	gitEmail          string = "ci@localhost"
+	defaultGitBranch  string = "2.x"
 )
 
 type OpensearchDashboard struct {
@@ -77,6 +81,10 @@ func (h *OpensearchDashboard) Ci(
 	// The codeCov token
 	// +optional
 	codeCoveToken *dagger.Secret,
+
+	// The git token
+	// +optional
+	gitToken *dagger.Secret,
 ) (dir *dagger.Directory, err error) {
 	var stdout string
 
@@ -96,6 +104,9 @@ func (h *OpensearchDashboard) Ci(
 	reportFile := h.Test(ctx)
 	dir = dir.WithFile("coverage.out", reportFile)
 
+	// Generate mock
+	dir = dir.WithDirectory(".", h.GenerateMock(ctx))
+
 	if ci {
 		if codeCoveToken == nil {
 			return nil, errors.New("You need to provide CodeCov token")
@@ -103,6 +114,10 @@ func (h *OpensearchDashboard) Ci(
 		stdout, err = h.CodeCov(ctx, dir, codeCoveToken)
 		if err != nil {
 			return nil, errors.Wrapf(err, "Error when upload report on CodeCov: %s", stdout)
+		}
+
+		if _, err = dag.Git().SetConfig(gitUsername, gitEmail, dagger.GitSetConfigOpts{BaseRepoURL: "github.com", Token: gitToken}).SetRepo(dir, dagger.GitSetRepoOpts{Branch: defaultGitBranch}).CommitAndPush(ctx, "Commit from CI. skip ci"); err != nil {
+			return nil, errors.Wrap(err, "Error when commit and push files change")
 		}
 	}
 
@@ -171,6 +186,7 @@ func (h *OpensearchDashboard) CodeCov(
 	ctx context.Context,
 
 	// Optional directory
+	// +optional
 	src *dagger.Directory,
 
 	// The Codecov token
@@ -187,7 +203,19 @@ func (h *OpensearchDashboard) CodeCov(
 		src,
 		token,
 		dagger.CodecovUploadOpts{
-			Files: []string{"coverage.out"},
+			Files:   []string{"coverage.out"},
+			Verbose: true,
 		},
 	)
+}
+
+// Test permit to run tests
+func (h *OpensearchDashboard) GenerateMock(
+	ctx context.Context,
+) *dagger.Directory {
+	return h.BaseImage.WithExec(helper.ForgeScript(`
+go install go.uber.org/mock/mockgen@%s
+mockgen --build_flags=--mod=mod -destination=mocks/client.go -package=mocks github.com/disaster37/opensearch-dashboard/v2 Client
+mockgen --build_flags=--mod=mod -destination=mocks/api.go -package=mocks github.com/disaster37/opensearch-dashboard/v2/api Api,SavedObjectApi,ShortenUrlApi,StatusApi
+	`, mockgenVersion)).Directory(goWorkDir)
 }
