@@ -3,7 +3,7 @@ module github.com/disaster37/opensearch-dashboard/v2
 go 1.23
 
 require (
-	github.com/disaster37/opensearch/v2 v2.0.11
+	github.com/disaster37/opensearch/v2 v2.0.12
 	github.com/go-resty/resty/v2 v2.15.3
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
