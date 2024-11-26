@@ -38,10 +38,6 @@ type OpensearchDashboard struct {
 	// +private
 	Src *dagger.Directory
 
-	// The golang base image
-	// +private
-	BaseImage *dagger.Container
-
 	// +private
 	GolangModule *dagger.Golang
 }
@@ -53,21 +49,9 @@ func New(
 	src *dagger.Directory,
 ) (*OpensearchDashboard, error) {
 
-	// Compute image because of base is not optional
-	version, err := inspectModVersion(context.Background(), src)
-	if err != nil {
-		return nil, err
-	}
-	base := defaultImage(version)
-	base = mountCaches(ctx, base).
-		WithDirectory(goWorkDir, src).
-		WithWorkdir(goWorkDir).
-		WithoutEntrypoint()
-
 	return &OpensearchDashboard{
 		Src:          src,
-		GolangModule: dag.Golang(base, src),
-		BaseImage:    base,
+		GolangModule: dag.Golang(src),
 	}, nil
 }
 
@@ -168,7 +152,7 @@ func (h *OpensearchDashboard) Test(
 		WithExposedPort(5601).
 		AsService()
 
-	return h.BaseImage.
+	return h.GolangModule.Container().
 		WithServiceBinding("opensearch.svc", opensearchService).
 		WithServiceBinding("dashboard.svc", dashboardService).
 		WithExec(helper.ForgeScript("DASHBOARD_USERNAME=%s DASHBOARD_PASSWORD=%s go test ./... -v -count 1 -parallel 1 -race -coverprofile=coverage.out -covermode=atomic -timeout 120m", username, password)).
@@ -213,9 +197,9 @@ func (h *OpensearchDashboard) CodeCov(
 func (h *OpensearchDashboard) GenerateMock(
 	ctx context.Context,
 ) *dagger.Directory {
-	return h.BaseImage.WithExec(helper.ForgeScript(`
+	return h.GolangModule.Container().WithExec(helper.ForgeScript(`
 go install go.uber.org/mock/mockgen@%s
 mockgen --build_flags=--mod=mod -destination=mocks/client.go -package=mocks github.com/disaster37/opensearch-dashboard/v2 Client
 mockgen --build_flags=--mod=mod -destination=mocks/api.go -package=mocks github.com/disaster37/opensearch-dashboard/v2/api Api,SavedObjectApi,ShortenUrlApi,StatusApi
-	`, mockgenVersion)).Directory(goWorkDir)
+	`, mockgenVersion)).Directory(".")
 }

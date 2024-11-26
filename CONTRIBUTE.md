@@ -12,6 +12,12 @@ Please start from branch `2.x`
 dagger call --src . ci export --path .
 ```
 
+### Format code
+
+```bash
+dagger call --src . format export --path .
+```
+
 ### Run lint
 
 ```bash
@@ -27,5 +33,5 @@ dagger call --src . test
 ### Generate mock
 
 ```bash
-dagger call --src . generate-mock export path .
+dagger call --src . generate-mock export --path .
 ```
