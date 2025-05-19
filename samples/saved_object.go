@@ -86,7 +86,7 @@ func SavedObjectExport() {
 	if err != nil {
 		log.Fatalf("Error exporting index pattern: %s", err)
 	}
-	log.Println(resp)
+	log.Println(string(resp))
 }
 
 func SavedObjectImport() {
