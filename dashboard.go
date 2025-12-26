@@ -3,7 +3,7 @@ package opensearchdashboard
 import (
 	"crypto/tls"
 
-	"github.com/disaster37/opensearch-dashboard/v2/api"
+	"github.com/disaster37/opensearch-dashboard/v3/api"
 	"github.com/go-resty/resty/v2"
 )
 

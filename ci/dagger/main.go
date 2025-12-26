@@ -24,13 +24,13 @@ import (
 )
 
 const (
-	OpensearchVersion string = "2.19.2"
+	OpensearchVersion string = "3.4.0"
 	username          string = "admin"
 	password          string = "vLPeJYa8.3RqtZCcAK6jNz"
 	mockgenVersion           = "v0.3.0"
 	gitUsername       string = "ci"
 	gitEmail          string = "ci@localhost"
-	defaultGitBranch  string = "2.x"
+	defaultGitBranch  string = "3.x"
 )
 
 type OpensearchDashboard struct {
@@ -231,7 +231,7 @@ func (h *OpensearchDashboard) GenerateMock(
 ) *dagger.Directory {
 	return h.GolangModule.Container().WithExec(helper.ForgeScript(`
 go install go.uber.org/mock/mockgen@%s
-mockgen --build_flags=--mod=mod -destination=mocks/client.go -package=mocks github.com/disaster37/opensearch-dashboard/v2 Client
-mockgen --build_flags=--mod=mod -destination=mocks/api.go -package=mocks github.com/disaster37/opensearch-dashboard/v2/api Api,SavedObjectApi,ShortenUrlApi,StatusApi
+mockgen --build_flags=--mod=mod -destination=mocks/client.go -package=mocks github.com/disaster37/opensearch-dashboard/v3 Client
+mockgen --build_flags=--mod=mod -destination=mocks/api.go -package=mocks github.com/disaster37/opensearch-dashboard/v3/api Api,SavedObjectApi,ShortenUrlApi,StatusApi
 	`, mockgenVersion)).Directory(".")
 }

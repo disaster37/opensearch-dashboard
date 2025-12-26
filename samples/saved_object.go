@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/disaster37/opensearch-dashboard/v2/api"
+	"github.com/disaster37/opensearch-dashboard/v3/api"
 	"k8s.io/utils/ptr"
 )
 

@@ -3,7 +3,7 @@ package samples
 import (
 	"log"
 
-	opensearchdashboard "github.com/disaster37/opensearch-dashboard/v2"
+	opensearchdashboard "github.com/disaster37/opensearch-dashboard/v3"
 )
 
 func getClient() opensearchdashboard.Client {

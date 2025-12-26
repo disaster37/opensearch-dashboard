@@ -1,6 +1,6 @@
 [![build](https://github.com/disaster37/opensearch-dashboard/actions/workflows/workflow.yml/badge.svg)](https://github.com/disaster37/opensearch-dashboard/actions/workflows/workflow.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/disaster37/opensearch-dashboard/v2)](https://goreportcard.com/report/github.com/disaster37/opensearch-dashboard/v2)
-[![GoDoc](https://godoc.org/github.com/disaster37/opensearch-dashboard/v2?status.svg)](http://godoc.org/github.com/disaster37/opensearch-dashboard/v2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/disaster37/opensearch-dashboard/v3)](https://goreportcard.com/report/github.com/disaster37/opensearch-dashboard/v3)
+[![GoDoc](https://godoc.org/github.com/disaster37/opensearch-dashboard/v3?status.svg)](http://godoc.org/github.com/disaster37/opensearch-dashboard/v3)
 [![codecov](https://codecov.io/gh/disaster37/opensearch-dashboard/graph/badge.svg?token=S2EVN8N79U)](https://codecov.io/gh/disaster37/opensearch-dashboard)
 
 
@@ -16,13 +16,13 @@ It support the following APIs:
 ## Compatibility
 
 It work with the following Opensearch dashboard verison:
-  - 2.x
+  - 3.x
 
 ## Installation
 
 Get librairy with gomod:
 ```bash
-go get -u https://github.com/disaster37/opensearch-dashboard
+go get -u https://github.com/disaster37/opensearch-dashboard/v3
 ```
 
 ## Usage
